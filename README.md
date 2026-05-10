@@ -23,7 +23,17 @@ The application follows a layered architecture with separate class library and U
 
 ## Screenshots
 
+### Home Screen
+![Home Screen](Screenshots/home-screen.png)
 
+### Home Help Screen
+![Home Screen](Screenshots/home-help-screen.png)
+
+### Admin Screen
+![Admin Panel](Screenshots/admin-screen.png)
+
+## Admin Screen (Credentials)
+![Admin Panel](Screenshots/admin-screen-credentials.png)
 
 ---
 
