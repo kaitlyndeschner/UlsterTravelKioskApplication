@@ -1,0 +1,306 @@
+﻿<Window x:Class="UlsterTravelKioskApplication.UI.Screens.AirlineScreen"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:UlsterTravelKioskApplication.UI.Screens"
+        mc:Ignorable="d"
+        WindowStartupLocation="CenterOwner"
+        Title="Airline Screen"
+        Height="450"
+        Width="800"
+        Background="#FFF2F4F6">
+
+    <!-- shared colour palette and reusable styles -->
+    <Window.Resources>
+
+        <!-- accent colours used for buttons -->
+        <SolidColorBrush x:Key="AccentBrush" Color="#3F6178"/>
+        <SolidColorBrush x:Key="AccentHoverBrush" Color="#5F7F92"/>
+        <SolidColorBrush x:Key="AccentPressedBrush" Color="#2F4C5C"/>
+
+        <!-- surface colours for cards and panels -->
+        <SolidColorBrush x:Key="SurfaceBrush" Color="#FFFFFFFF"/>
+        <SolidColorBrush x:Key="SurfaceBorderBrush" Color="#FFD2D9E0"/>
+
+        <!-- text colours -->
+        <SolidColorBrush x:Key="TextPrimaryBrush" Color="#FF1F2937"/>
+        <SolidColorBrush x:Key="TextSecondaryBrush" Color="#FF6B7280"/>
+
+        <!-- confirm button colours -->
+        <SolidColorBrush x:Key="ConfirmBrush" Color="#4A766D"/>
+        <SolidColorBrush x:Key="ConfirmHoverBrush" Color="#5A8A80"/>
+        <SolidColorBrush x:Key="ConfirmPressedBrush" Color="#3B5E57"/>
+
+        <!-- reset button colours -->
+        <SolidColorBrush x:Key="ResetBrush" Color="#556A73"/>
+        <SolidColorBrush x:Key="ResetHoverBrush" Color="#667D87"/>
+        <SolidColorBrush x:Key="ResetPressedBrush" Color="#44565D"/>
+
+        <!-- exit button colours -->
+        <SolidColorBrush x:Key="ExitBrush" Color="#4F3E46"/>
+        <SolidColorBrush x:Key="ExitHoverBrush" Color="#604B55"/>
+        <SolidColorBrush x:Key="ExitPressedBrush" Color="#3A2F35"/>
+
+        <!-- shadow used for card-style layout -->
+        <DropShadowEffect x:Key="CardShadow"
+                          BlurRadius="14"
+                          ShadowDepth="3"
+                          Opacity="0.18"/>
+
+        <!-- base button style used across this screen -->
+        <Style x:Key="PrimaryMenuButtonStyle" TargetType="Button">
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="Padding" Value="14,6"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Background" Value="{StaticResource AccentBrush}"/>
+            <Setter Property="BorderBrush" Value="#2B4553"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+
+            <!-- custom template for rounded buttons -->
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="Border"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="10"
+                                SnapsToDevicePixels="True">
+                            <ContentPresenter
+                                Margin="{TemplateBinding Padding}"
+                                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+                        </Border>
+
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Border"
+                                        Property="Background"
+                                        Value="{StaticResource AccentHoverBrush}"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="Border"
+                                        Property="Background"
+                                        Value="{StaticResource AccentPressedBrush}"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter TargetName="Border"
+                                        Property="Opacity"
+                                        Value="0.55"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- confirm button style -->
+        <Style x:Key="ConfirmButtonStyle"
+               TargetType="Button"
+               BasedOn="{StaticResource PrimaryMenuButtonStyle}">
+            <Setter Property="Background" Value="{StaticResource ConfirmBrush}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource ConfirmPressedBrush}"/>
+        </Style>
+
+        <!-- reset button style -->
+        <Style x:Key="ResetButtonStyle"
+               TargetType="Button"
+               BasedOn="{StaticResource PrimaryMenuButtonStyle}">
+            <Setter Property="Background" Value="{StaticResource ResetBrush}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource ResetPressedBrush}"/>
+        </Style>
+
+        <!-- exit button style -->
+        <Style x:Key="ExitButtonStyle"
+               TargetType="Button"
+               BasedOn="{StaticResource PrimaryMenuButtonStyle}">
+            <Setter Property="Background" Value="{StaticResource ExitBrush}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource ExitPressedBrush}"/>
+        </Style>
+
+        <!-- combobox style for airline selector -->
+        <Style x:Key="ComboBoxModernStyle" TargetType="ComboBox">
+            <Setter Property="Height" Value="28"/>
+            <Setter Property="Padding" Value="10,2"/>
+            <Setter Property="Background" Value="{StaticResource SurfaceBrush}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource SurfaceBorderBrush}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Foreground" Value="{StaticResource TextPrimaryBrush}"/>
+        </Style>
+
+        <!-- card-style groupbox used for routes and details -->
+        <Style x:Key="CardGroupBoxStyle" TargetType="GroupBox">
+            <Setter Property="Background" Value="{StaticResource SurfaceBrush}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource SurfaceBorderBrush}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Foreground" Value="{StaticResource TextPrimaryBrush}"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="GroupBox">
+                        <Border Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="14"
+                                Effect="{StaticResource CardShadow}"
+                                Padding="14">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+
+                                <!-- groupbox header -->
+                                <TextBlock Text="{TemplateBinding Header}"
+                                           FontWeight="SemiBold"
+                                           FontSize="12"
+                                           Foreground="{StaticResource TextSecondaryBrush}"
+                                           Margin="2,0,0,10"/>
+
+                                <ContentPresenter Grid.Row="1"/>
+                            </Grid>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- listbox style for displaying routes -->
+        <Style x:Key="RoutesListBoxStyle" TargetType="ListBox">
+            <Setter Property="Background" Value="{StaticResource SurfaceBrush}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource SurfaceBorderBrush}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="6"/>
+            <Setter Property="Foreground" Value="{StaticResource TextPrimaryBrush}"/>
+        </Style>
+
+    </Window.Resources>
+
+    <!-- main page layout -->
+    <Grid Margin="15">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- page title -->
+        <StackPanel Orientation="Horizontal"
+                    HorizontalAlignment="Center"
+                    Margin="0,0,0,10">
+            <TextBlock FontFamily="Segoe MDL2 Assets"
+                       Text="&#xE709;"
+                       FontSize="20"
+                       Margin="0,0,8,0"/>
+            <TextBlock Text="Airlines"
+                       FontSize="22"
+                       FontWeight="SemiBold"/>
+        </StackPanel>
+
+        <!-- airline selection and actions -->
+        <Grid Grid.Row="1" Margin="0,0,0,10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- dropdown list of airlines -->
+            <ComboBox x:Name="comboboxAirlines"
+                      Grid.Column="0"
+                      SelectedValuePath="AirlineCode"
+                      Style="{StaticResource ComboBoxModernStyle}">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock>
+                            <Run Text="{Binding AirlineName}" />
+                            <Run Text=" (" />
+                            <Run Text="{Binding AirlineCode}" />
+                            <Run Text=")" />
+                        </TextBlock>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+
+            <!-- confirm button loads routes for selected airline -->
+            <Button Content="Confirm"
+                    Grid.Column="1"
+                    Margin="10,0,0,0"
+                    Padding="18,0"
+                    Style="{StaticResource ConfirmButtonStyle}"
+                    Click="AirlineConfirmClick"/>
+
+            <!-- reset button clears selection -->
+            <Button Content="Reset"
+                    Grid.Column="2"
+                    Margin="5,0,0,0"
+                    Padding="18,0"
+                    Style="{StaticResource ResetButtonStyle}"
+                    Click="ResetClick"/>
+        </Grid>
+
+        <!-- available routes list -->
+        <GroupBox Grid.Row="2"
+                  Header="Available Routes"
+                  Style="{StaticResource CardGroupBoxStyle}">
+            <ListBox x:Name="AirlineRoutesList"
+                     SelectionChanged="RoutesListSelection"
+                     Style="{StaticResource RoutesListBoxStyle}"
+                     DisplayMemberPath="RouteDisplay"/>
+        </GroupBox>
+
+        <!-- selected route details -->
+        <GroupBox Grid.Row="3"
+                  Header="Selected Route Details"
+                  Margin="0,10,0,10"
+                  Style="{StaticResource CardGroupBoxStyle}">
+            <StackPanel>
+                <TextBlock x:Name="textAirlineInfo"
+                           TextWrapping="Wrap"
+                           LineHeight="20"
+                           LineStackingStrategy="BlockLineHeight"/>
+
+                <TextBlock x:Name="textAirlineRouteInfo"
+                           TextWrapping="Wrap"
+                           LineHeight="20"
+                           LineStackingStrategy="BlockLineHeight"/>
+
+                <TextBlock x:Name="textAirlinePredictionInfo"
+                           TextWrapping="Wrap"
+                           LineHeight="20"
+                           LineStackingStrategy="BlockLineHeight"/>
+            </StackPanel>
+        </GroupBox>
+
+        <!-- navigation buttons -->
+        <Grid Grid.Row="4">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <Button Content="Back"
+                    Grid.Column="0"
+                    Width="90"
+                    Margin="5"
+                    Style="{StaticResource PrimaryMenuButtonStyle}"
+                    Click="BackClick"/>
+
+            <Button Content="Exit"
+                    Grid.Column="2"
+                    Width="90"
+                    Margin="5"
+                    Style="{StaticResource ExitButtonStyle}"
+                    Click="ExitClick"/>
+        </Grid>
+    </Grid>
+</Window>

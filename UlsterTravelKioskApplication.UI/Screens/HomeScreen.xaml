@@ -1,0 +1,256 @@
+﻿<Window x:Class="UlsterTravelKioskApplication.UI.Screens.HomeScreen"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
+        Title="Ulster Travel Kiosk Application"
+        Height="450"
+        Width="800"
+        PreviewKeyDown="WindowKeyDown"
+        Focusable="True"
+        Background="#FFF2F4F6">
+
+    <Window.Resources>
+
+        <!-- main colour palette used across the app for a consistent theme -->
+        <SolidColorBrush x:Key="AccentBrush" Color="#3F6178"/>
+        <SolidColorBrush x:Key="AccentHoverBrush" Color="#5F7F92"/>
+        <SolidColorBrush x:Key="AccentPressedBrush" Color="#2F4C5C"/>
+
+        <!-- background colours for card surfaces and borders -->
+        <SolidColorBrush x:Key="SurfaceBrush" Color="#FFFFFFFF"/>
+        <SolidColorBrush x:Key="SurfaceBorderBrush" Color="#FFD2D9E0"/>
+
+        <!-- text colours used for headings and secondary text -->
+        <SolidColorBrush x:Key="TextPrimaryBrush" Color="#FF1F2937"/>
+        <SolidColorBrush x:Key="TextSecondaryBrush" Color="#FF6B7280"/>
+
+        <!-- exit button colours so exit stands out from normal actions -->
+        <SolidColorBrush x:Key="ExitBrush" Color="#5A404A"/>
+        <SolidColorBrush x:Key="ExitHoverBrush" Color="#6D515C"/>
+        <SolidColorBrush x:Key="ExitPressedBrush" Color="#423037"/>
+
+        <!-- shadow effect used on cards to create depth -->
+        <DropShadowEffect x:Key="CardShadow"
+                          BlurRadius="14"
+                          ShadowDepth="3"
+                          Opacity="0.18"/>
+
+        <!-- main button style used for the menu buttons -->
+        <Style x:Key="PrimaryMenuButtonStyle" TargetType="Button">
+            <Setter Property="Height" Value="38"/>
+            <Setter Property="Margin" Value="0,8,0,0"/>
+            <Setter Property="Padding" Value="14,8"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Background" Value="{StaticResource AccentBrush}"/>
+            <Setter Property="BorderBrush" Value="#2B4553"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+
+            <!-- custom template gives rounded corners and hover/pressed behaviour -->
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="Border"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="10"
+                                SnapsToDevicePixels="True">
+                            <ContentPresenter
+                                Margin="{TemplateBinding Padding}"
+                                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+                        </Border>
+
+                        <!-- triggers change the button colour based on user interaction -->
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Border" Property="Background" Value="{StaticResource AccentHoverBrush}"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="Border" Property="Background" Value="{StaticResource AccentPressedBrush}"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter TargetName="Border" Property="Opacity" Value="0.55"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- exit button uses the same base style but swaps to exit colours -->
+        <Style x:Key="ExitButtonStyle"
+               TargetType="Button"
+               BasedOn="{StaticResource PrimaryMenuButtonStyle}">
+            <Setter Property="Background" Value="{StaticResource ExitBrush}"/>
+            <Setter Property="BorderBrush" Value="#53242C"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="{StaticResource ExitHoverBrush}"/>
+                </Trigger>
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter Property="Background" Value="{StaticResource ExitPressedBrush}"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <!-- small help button style used in the top right corner -->
+        <Style x:Key="HelpButtonStyle" TargetType="Button">
+            <Setter Property="Height" Value="28"/>
+            <Setter Property="Padding" Value="10,4"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Background" Value="{StaticResource AccentBrush}"/>
+            <Setter Property="BorderBrush" Value="#2B4553"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+
+            <!-- template keeps this button consistent with rounded corners and hover states -->
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="Border"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="10"
+                                SnapsToDevicePixels="True">
+                            <ContentPresenter Margin="{TemplateBinding Padding}"
+                                              HorizontalAlignment="Center"
+                                              VerticalAlignment="Center"/>
+                        </Border>
+
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Border" Property="Background" Value="{StaticResource AccentHoverBrush}"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="Border" Property="Background" Value="{StaticResource AccentPressedBrush}"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter TargetName="Border" Property="Opacity" Value="0.55"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- reusable style for icons using the segoue mdl2 assets font -->
+        <Style x:Key="Mdl2IconStyle" TargetType="TextBlock">
+            <Setter Property="FontFamily" Value="Segoe MDL2 Assets"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="Margin" Value="0,0,10,0"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+
+    </Window.Resources>
+
+    <Grid Margin="15">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <!-- top area for help + title -->
+            <RowDefinition Height="*"/>
+            <!-- middle area for main menu card -->
+            <RowDefinition Height="Auto"/>
+            <!-- bottom area for exit button -->
+        </Grid.RowDefinitions>
+
+        <!-- help button opens a messagebox or help screen via HelpClick -->
+        <Button Grid.Row="0"
+                Content="Help"
+                Style="{StaticResource HelpButtonStyle}"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Top"
+                Click="HelpClick"/>
+
+        <!-- title section shown at the top center -->
+        <StackPanel Grid.Row="0"
+                    HorizontalAlignment="Center"
+                    Margin="0,6,0,16">
+            <TextBlock Text="Welcome to"
+                       HorizontalAlignment="Center"
+                       Margin="0,4,0,0"
+                       FontSize="12"
+                       Foreground="{StaticResource TextSecondaryBrush}"/>
+            <TextBlock Text="Ulster Travel Kiosk"
+                       HorizontalAlignment="Center"
+                       FontSize="26"
+                       FontWeight="SemiBold"
+                       Foreground="{StaticResource TextPrimaryBrush}"/>
+        </StackPanel>
+
+        <!-- main card container that holds the navigation buttons -->
+        <Border Grid.Row="1"
+                VerticalAlignment="Center"
+                HorizontalAlignment="Center"
+                Background="{StaticResource SurfaceBrush}"
+                BorderBrush="{StaticResource SurfaceBorderBrush}"
+                BorderThickness="1"
+                CornerRadius="14"
+                Padding="20"
+                Effect="{StaticResource CardShadow}">
+
+            <StackPanel Width="280">
+                <!-- prompt text so the user knows what to do -->
+                <TextBlock Text="Please select an option to proceed"
+                           HorizontalAlignment="Center"
+                           Margin="0,0,0,10"
+                           FontSize="12"
+                           Foreground="{StaticResource TextSecondaryBrush}"/>
+
+                <!-- button opens the airport screen -->
+                <Button Style="{StaticResource PrimaryMenuButtonStyle}" Click="AirportClick">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <TextBlock Style="{StaticResource Mdl2IconStyle}" Text="&#xE707;"/>
+                        <!-- airport icon -->
+                        <TextBlock Text="Airports" VerticalAlignment="Center"/>
+                        <!-- button label -->
+                    </StackPanel>
+                </Button>
+
+                <!-- button opens the airline screen -->
+                <Button Style="{StaticResource PrimaryMenuButtonStyle}" Click="AirlineClick">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <TextBlock Style="{StaticResource Mdl2IconStyle}" Text="&#xE709;"/>
+                        <!-- airplane icon -->
+                        <TextBlock Text="Airlines" VerticalAlignment="Center"/>
+                        <!-- button label -->
+                    </StackPanel>
+                </Button>
+
+                <!-- button opens the destinations screen -->
+                <Button Style="{StaticResource PrimaryMenuButtonStyle}" Click="DestinationsClick">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <TextBlock Style="{StaticResource Mdl2IconStyle}" Text="&#xE774;"/>
+                        <!-- globe icon -->
+                        <TextBlock Text="Destinations" VerticalAlignment="Center"/>
+                        <!-- button label -->
+                    </StackPanel>
+                </Button>
+            </StackPanel>
+        </Border>
+
+        <!-- exit button closes the whole program using ExitClick -->
+        <StackPanel Grid.Row="2" HorizontalAlignment="Center">
+            <Button Content="Exit Program"
+                    Width="150"
+                    Margin="0,12,0,0"
+                    Style="{StaticResource ExitButtonStyle}"
+                    Click="ExitClick"/>
+        </StackPanel>
+    </Grid>
+</Window>

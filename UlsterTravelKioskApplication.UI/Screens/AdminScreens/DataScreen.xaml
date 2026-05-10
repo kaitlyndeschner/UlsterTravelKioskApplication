@@ -1,0 +1,385 @@
+﻿<Window x:Class="UlsterTravelKioskApplication.UI.Screens.AdminScreens.DataScreen"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        WindowStartupLocation="CenterOwner"
+        Title="Data Management"
+        Height="450"
+        Width="800"
+        Background="#FFF2F4F6">
+
+    <!-- shared resources for colours, styles, and layout consistency -->
+    <Window.Resources>
+
+        <!-- colour palette shared with other admin screens -->
+        <SolidColorBrush x:Key="AccentBrush" Color="#3F6178"/>
+        <SolidColorBrush x:Key="AccentHoverBrush" Color="#5F7F92"/>
+        <SolidColorBrush x:Key="AccentPressedBrush" Color="#2F4C5C"/>
+
+        <!-- surface colours for card-style containers -->
+        <SolidColorBrush x:Key="SurfaceBrush" Color="#FFFFFFFF"/>
+        <SolidColorBrush x:Key="SurfaceBorderBrush" Color="#FFD2D9E0"/>
+
+        <!-- text colours for headings and secondary information -->
+        <SolidColorBrush x:Key="TextPrimaryBrush" Color="#FF1F2937"/>
+        <SolidColorBrush x:Key="TextSecondaryBrush" Color="#FF6B7280"/>
+
+        <!-- confirm button colour scheme -->
+        <SolidColorBrush x:Key="ConfirmBrush" Color="#4A766D"/>
+        <SolidColorBrush x:Key="ConfirmHoverBrush" Color="#5A8A80"/>
+        <SolidColorBrush x:Key="ConfirmPressedBrush" Color="#3B5E57"/>
+
+        <!-- reusable drop shadow for card-style elements -->
+        <DropShadowEffect x:Key="CardShadow"
+                          BlurRadius="14"
+                          ShadowDepth="3"
+                          Opacity="0.18"/>
+
+        <!-- reset button colour scheme -->
+        <SolidColorBrush x:Key="ResetBrush" Color="#556A73"/>
+        <SolidColorBrush x:Key="ResetHoverBrush" Color="#667D87"/>
+        <SolidColorBrush x:Key="ResetPressedBrush" Color="#44565D"/>
+
+        <!-- exit button colour scheme -->
+        <SolidColorBrush x:Key="ExitBrush" Color="#4F3E46"/>
+        <SolidColorBrush x:Key="ExitHoverBrush" Color="#604B55"/>
+        <SolidColorBrush x:Key="ExitPressedBrush" Color="#3A2F35"/>
+
+        <!-- base button style used across this screen -->
+        <Style x:Key="PrimaryMenuButtonStyle" TargetType="Button">
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="Padding" Value="14,6"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Background" Value="{StaticResource AccentBrush}"/>
+            <Setter Property="BorderBrush" Value="#2B4553"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+
+            <!-- rounded button template with hover and press feedback -->
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="Border"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="10"
+                                SnapsToDevicePixels="True">
+                            <ContentPresenter
+                                Margin="{TemplateBinding Padding}"
+                                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+                        </Border>
+
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Border"
+                                        Property="Background"
+                                        Value="{StaticResource AccentHoverBrush}"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="Border"
+                                        Property="Background"
+                                        Value="{StaticResource AccentPressedBrush}"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter TargetName="Border"
+                                        Property="Opacity"
+                                        Value="0.55"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- confirm button inherits base style with green colouring -->
+        <Style x:Key="ConfirmButtonStyle"
+               TargetType="Button"
+               BasedOn="{StaticResource PrimaryMenuButtonStyle}">
+            <Setter Property="Background" Value="{StaticResource ConfirmBrush}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource ConfirmPressedBrush}"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="{StaticResource ConfirmHoverBrush}"/>
+                </Trigger>
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter Property="Background" Value="{StaticResource ConfirmPressedBrush}"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <!-- reset button style for clearing selections or status -->
+        <Style x:Key="ResetButtonStyle"
+               TargetType="Button"
+               BasedOn="{StaticResource PrimaryMenuButtonStyle}">
+            <Setter Property="Background" Value="{StaticResource ResetBrush}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource ResetPressedBrush}"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="{StaticResource ResetHoverBrush}"/>
+                </Trigger>
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter Property="Background" Value="{StaticResource ResetPressedBrush}"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <!-- exit button style -->
+        <Style x:Key="ExitButtonStyle"
+               TargetType="Button"
+               BasedOn="{StaticResource PrimaryMenuButtonStyle}">
+            <Setter Property="Background" Value="{StaticResource ExitBrush}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource ExitPressedBrush}"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="{StaticResource ExitHoverBrush}"/>
+                </Trigger>
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter Property="Background" Value="{StaticResource ExitPressedBrush}"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <!-- modern combobox style for action selection -->
+        <Style x:Key="ComboBoxModernStyle" TargetType="ComboBox">
+            <Setter Property="Height" Value="28"/>
+            <Setter Property="Padding" Value="10,2"/>
+            <Setter Property="Background" Value="{StaticResource SurfaceBrush}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource SurfaceBorderBrush}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Foreground" Value="{StaticResource TextPrimaryBrush}"/>
+        </Style>
+
+        <!-- card-style groupbox used for overview section -->
+        <Style x:Key="CardGroupBoxStyle" TargetType="GroupBox">
+            <Setter Property="Background" Value="{StaticResource SurfaceBrush}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource SurfaceBorderBrush}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Foreground" Value="{StaticResource TextPrimaryBrush}"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="GroupBox">
+                        <Border Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="14"
+                                Effect="{StaticResource CardShadow}"
+                                Padding="14"
+                                SnapsToDevicePixels="True">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+
+                                <!-- groupbox header -->
+                                <TextBlock Text="{TemplateBinding Header}"
+                                           FontWeight="SemiBold"
+                                           FontSize="12"
+                                           Foreground="{StaticResource TextSecondaryBrush}"
+                                           Margin="2,0,0,10"/>
+
+                                <ContentPresenter Grid.Row="1"/>
+                            </Grid>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- light bordered container used for information blocks -->
+        <Style x:Key="InfoBorderStyle" TargetType="Border">
+            <Setter Property="Background" Value="{StaticResource SurfaceBrush}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource SurfaceBorderBrush}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="CornerRadius" Value="10"/>
+            <Setter Property="Padding" Value="10"/>
+        </Style>
+
+    </Window.Resources>
+
+    <!-- main layout grid with title, controls, content, and footer -->
+    <Grid Margin="15">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- screen title -->
+        <TextBlock Text="Data Management"
+                   Grid.Row="0"
+                   HorizontalAlignment="Center"
+                   FontSize="22"
+                   FontWeight="SemiBold"
+                   Foreground="{StaticResource TextPrimaryBrush}"
+                   Margin="0,6,0,15"/>
+
+        <!-- action selector with confirm and reset buttons -->
+        <Grid Grid.Row="1" Margin="0,0,0,10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- dropdown for selecting admin data actions -->
+            <ComboBox x:Name="comboboxActions"
+                      Grid.Column="0"
+                      SelectedIndex="-1"
+                      Style="{StaticResource ComboBoxModernStyle}">
+
+                <!-- available admin actions -->
+                <ComboBoxItem Content="Reload Data"/>
+                <ComboBoxItem Content="Save Data"/>
+                <ComboBoxItem Content="Upload Airline Codes"/>
+                <ComboBoxItem Content="Upload Airport Codes"/>
+                <ComboBoxItem Content="Refresh Airlines"/>
+                <ComboBoxItem Content="Refresh Airports"/>
+                <ComboBoxItem Content="Refresh Destinations"/>
+                <ComboBoxItem Content="Refresh Delay Predictions"/>
+                <ComboBoxItem Content="Refresh Airport Direct Destinations"/>
+                <ComboBoxItem Content="Refresh Airline Destinations"/>
+            </ComboBox>
+
+            <!-- confirms selected action -->
+            <Button Content="Confirm"
+                    Grid.Column="1"
+                    Margin="10,0,0,0"
+                    Padding="18,0"
+                    Style="{StaticResource ConfirmButtonStyle}"
+                    Click="ConfirmClick"/>
+
+            <!-- clears selection and status -->
+            <Button Content="Reset"
+                    Grid.Column="2"
+                    Margin="5,0,0,0"
+                    Padding="18,0"
+                    Style="{StaticResource ResetButtonStyle}"
+                    Click="ResetClick"/>
+        </Grid>
+
+        <!-- overview section showing refresh dates and record counts -->
+        <GroupBox Grid.Row="2"
+                  Header="Overview"
+                  Style="{StaticResource CardGroupBoxStyle}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <!-- refresh timestamps and dataset sizes -->
+                <Grid Grid.Row="0" Margin="0,0,0,10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!-- last refresh dates for key datasets -->
+                    <StackPanel Grid.Column="0" Margin="0,0,20,0">
+                        <TextBlock Text="Last refresh dates"
+                                   FontWeight="SemiBold"
+                                   Foreground="{StaticResource TextSecondaryBrush}"
+                                   HorizontalAlignment="Center"
+                                   Margin="0,0,0,10"/>
+
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <StackPanel Grid.Column="0" HorizontalAlignment="Center">
+                                <TextBlock Text="Airlines"
+                                           FontWeight="SemiBold"
+                                           Foreground="{StaticResource TextPrimaryBrush}"/>
+                                <TextBlock x:Name="textAirlinesRefresh"
+                                           Foreground="{StaticResource TextSecondaryBrush}"
+                                           TextAlignment="Center"/>
+                            </StackPanel>
+
+                            <StackPanel Grid.Column="1" HorizontalAlignment="Center">
+                                <TextBlock Text="Airports"
+                                           FontWeight="SemiBold"
+                                           Foreground="{StaticResource TextPrimaryBrush}"/>
+                                <TextBlock x:Name="textAirportsRefresh"
+                                           Foreground="{StaticResource TextSecondaryBrush}"
+                                           TextAlignment="Center"/>
+                            </StackPanel>
+
+                            <StackPanel Grid.Column="2" HorizontalAlignment="Center">
+                                <TextBlock Text="Destinations"
+                                           FontWeight="SemiBold"
+                                           Foreground="{StaticResource TextPrimaryBrush}"/>
+                                <TextBlock x:Name="textDestinationsRefresh"
+                                           Foreground="{StaticResource TextSecondaryBrush}"
+                                           TextAlignment="Center"/>
+                            </StackPanel>
+                        </Grid>
+                    </StackPanel>
+
+                    <!-- record counts for loaded datasets -->
+                    <StackPanel Grid.Column="1">
+                        <TextBlock Text="Record counts"
+                                   FontWeight="SemiBold"
+                                   Foreground="{StaticResource TextSecondaryBrush}"
+                                   HorizontalAlignment="Center"
+                                   Margin="0,0,0,10"/>
+
+                        <Border Style="{StaticResource InfoBorderStyle}">
+                            <TextBlock x:Name="textTracking"
+                                       Foreground="{StaticResource TextPrimaryBrush}"
+                                       TextWrapping="Wrap"/>
+                        </Border>
+                    </StackPanel>
+                </Grid>
+
+                <!-- status message shown after actions -->
+                <Border Grid.Row="1" Style="{StaticResource InfoBorderStyle}">
+                    <TextBlock x:Name="txtStatus"
+                               Text="Please select an option from the drop down menu."
+                               Foreground="{StaticResource TextPrimaryBrush}"
+                               TextWrapping="Wrap"
+                               TextAlignment="Center"
+                               FontWeight="SemiBold"/>
+                </Border>
+
+            </Grid>
+        </GroupBox>
+
+        <!-- bottom navigation buttons -->
+        <Grid Grid.Row="3" Margin="0,10,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Button Content="Back"
+                    Grid.Column="0"
+                    HorizontalAlignment="Left"
+                    Width="90"
+                    Margin="5"
+                    Style="{StaticResource PrimaryMenuButtonStyle}"
+                    Click="BackClick"/>
+
+            <Button Content="Exit"
+                    Grid.Column="1"
+                    HorizontalAlignment="Right"
+                    Width="90"
+                    Margin="5"
+                    Style="{StaticResource ExitButtonStyle}"
+                    Click="ExitClick"/>
+        </Grid>
+    </Grid>
+</Window>
