@@ -1,0 +1,2 @@
+﻿AdminUsername,AdminPassword,APIKeyA,APISecretA,AirlinesRefresh,AirportsRefresh,DestinationsRefresh,AirportRoutesRefresh,AirlineDestinationsRefresh
+admin,HASH::admin,,,2025-12-19 10:00:00,2025-12-19 10:00:00,2025-12-19 10:00:00,2025-12-19 10:00:00,2025-12-19 10:00:00

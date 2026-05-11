@@ -1,0 +1,12 @@
+﻿AirportCode,Status,Percentage,Date
+BFS,On time,82,2025-12-10
+BHD,On time,79,2025-12-10
+DUB,Delayed,65,2025-12-10
+LHR,Delayed,58,2025-12-11
+MAN,On time,74,2025-12-11
+EDI,On time,76,2025-12-12
+YYZ,Delayed,61,2025-12-12
+YVR,On time,80,2025-12-13
+YYC,On time,78,2025-12-13
+YXE,On time,83,2025-12-14
+YQR,On time,81,2025-12-14
