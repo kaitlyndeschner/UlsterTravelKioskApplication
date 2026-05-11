@@ -1,0 +1,4 @@
+﻿Timestamp,Description,Details
+01/12/2025 14:03,"API Call","GET /v1/airport"
+01/12/2025 14:03,"API Response","200 OK"
+01/12/2025 14:04,"Error","Invalid API key"
