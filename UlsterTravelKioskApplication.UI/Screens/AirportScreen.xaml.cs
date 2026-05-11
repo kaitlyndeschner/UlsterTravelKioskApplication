@@ -54,7 +54,7 @@ namespace UlsterTravelKioskApplication.UI.Screens
         // runs when the confirm button is clicked after selecting an airport
         private async void AirportConfirmClick(object sender, RoutedEventArgs e)
         {
-            string airportCodeSelected = comboboxAirports.SelectedValue as string;
+            string? airportCodeSelected = comboboxAirports.SelectedValue as string;
             if (string.IsNullOrWhiteSpace(airportCodeSelected)) return; // stops if nothing is selected
 
             // get direct destinations for this airport using api and caching logic in apiProcessor
