@@ -47,7 +47,7 @@ namespace UlsterTravelKioskApplication.UI.Screens
         private void DestinationsConfirmClick(object sender, RoutedEventArgs e)
         {
             // reads selected country from the drop down
-            string countrySelected = comboboxDestinations.SelectedValue as string;
+            string? countrySelected = comboboxDestinations.SelectedValue as string;
             if (string.IsNullOrWhiteSpace(countrySelected)) return; // stops if nothing selected
 
             _selectedCountry = countrySelected; // stores selection

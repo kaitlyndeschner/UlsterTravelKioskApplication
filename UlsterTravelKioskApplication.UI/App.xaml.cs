@@ -7,13 +7,13 @@ namespace UlsterTravelKioskApplication.UI
     public partial class App : Application
     {
         // ensures every screen uses the same loaded csv data
-        public static DataManager Data { get; private set; }
+        public static DataManager Data { get; private set; } = null!;
 
         // ensures api calls and caching use one consistent service
-        public static APIProcessor APIProcessor { get; private set; }
+        public static APIProcessor APIProcessor { get; private set; } = null!;
 
         // ensures all screens write to the same log list/csv file
-        public static LogService Log { get; private set; }
+        public static LogService Log { get; private set; } = null!;
 
         // runs once when the application starts
         protected override void OnStartup(StartupEventArgs e)

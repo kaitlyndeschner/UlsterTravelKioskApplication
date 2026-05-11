@@ -53,7 +53,7 @@ namespace UlsterTravelKioskApplication.UI.Screens
         // runs when confirm button is clicked (loads destinations for selected airline)
         private async void AirlineConfirmClick(object sender, RoutedEventArgs e)
         {
-            string airlineCodeSelected = comboboxAirlines.SelectedValue as string; // gets the selected airline code
+            string? airlineCodeSelected = comboboxAirlines.SelectedValue as string; // gets the selected airline code
             if (string.IsNullOrWhiteSpace(airlineCodeSelected)) return;
 
             // calls api processor to get destinations for selected airline
@@ -221,7 +221,7 @@ namespace UlsterTravelKioskApplication.UI.Screens
             {
                 // logs the full exception
                 _log.AddLog("API Error",
-                    $"AirlineScreen prediction failed. Origin={selectedRoute?.OriginAirportCode}. {ex}");
+                    $"AirlineScreen prediction failed. Origin={selectedRoute.OriginAirportCode}. {ex}");
 
                 // tries cached/local delay prediction service if api fails
                 try
