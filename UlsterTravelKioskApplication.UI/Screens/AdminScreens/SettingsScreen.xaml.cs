@@ -30,6 +30,27 @@ namespace UlsterTravelKioskApplication.UI.Screens.Admin
             string apiKey = txtApiKey.Text?.Trim() ?? ""; // api key textbox can be empty
             string apiSecret = txtApiSecret.Password?.Trim() ?? ""; // passwordbox uses .Password
 
+            // password change fields (all optional unless user wants to change password)
+            string currentPassword = txtCurrentPassword.Password ?? "";
+            string newPassword = txtNewPassword.Password ?? "";
+            string confirmPassword = txtConfirmPassword.Password ?? "";
+
+            // if user entered anything in the new password field, attempt a password change
+            if (!string.IsNullOrEmpty(newPassword) || !string.IsNullOrEmpty(confirmPassword))
+            {
+                if (newPassword != confirmPassword)
+                {
+                    MessageBox.Show("New password and confirmation do not match.");
+                    return;
+                }
+
+                if (!_admin.ChangePassword(currentPassword, newPassword, out string error))
+                {
+                    MessageBox.Show(error);
+                    return;
+                }
+            }
+
             // only update username if the user typed something
             if (!string.IsNullOrWhiteSpace(username))
                 _admin.UpdateSettings(username); // saves new username to settings.csv

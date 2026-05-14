@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         WindowStartupLocation="CenterOwner"
         Title="SettingsScreen"
-        Height="450"
+        Height="650"
         Width="800"
         Background="#FFF2F4F6">
 
@@ -201,6 +201,25 @@
                 <TextBlock Text="API Secret (leave blank to keep current):"
                            Foreground="{StaticResource TextSecondaryBrush}"/>
                 <PasswordBox x:Name="txtApiSecret"
+                             Style="{StaticResource PasswordBoxModernStyle}"
+                             Margin="0,3,0,12"/>
+
+                <!-- change password section (all three fields required to change) -->
+                <TextBlock Text="Current Password (required to change password):"
+                           Foreground="{StaticResource TextSecondaryBrush}"/>
+                <PasswordBox x:Name="txtCurrentPassword"
+                             Style="{StaticResource PasswordBoxModernStyle}"
+                             Margin="0,3,0,12"/>
+
+                <TextBlock Text="New Password (leave blank to keep current):"
+                           Foreground="{StaticResource TextSecondaryBrush}"/>
+                <PasswordBox x:Name="txtNewPassword"
+                             Style="{StaticResource PasswordBoxModernStyle}"
+                             Margin="0,3,0,12"/>
+
+                <TextBlock Text="Confirm New Password:"
+                           Foreground="{StaticResource TextSecondaryBrush}"/>
+                <PasswordBox x:Name="txtConfirmPassword"
                              Style="{StaticResource PasswordBoxModernStyle}"/>
             </StackPanel>
         </Border>

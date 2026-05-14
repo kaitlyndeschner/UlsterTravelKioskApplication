@@ -51,6 +51,33 @@ namespace UlsterTravelKioskApplication.Services
             _log.AddLog("Admin", "Admin username updated");
         }
 
+        // verifies current password, then hashes and saves the new one
+        public bool ChangePassword(string currentPassword, string newPassword, out string error)
+        {
+            error = "";
+            currentPassword ??= "";
+            newPassword ??= "";
+
+            if (!PasswordHasher.Verify(currentPassword, _data.Settings.AdminPassword))
+            {
+                _log.AddLog("Admin", "Password change failed: current password incorrect");
+                error = "Current password is incorrect.";
+                return false;
+            }
+
+            if (newPassword.Length < 4)
+            {
+                _log.AddLog("Admin", "Password change failed: new password too short");
+                error = "New password must be at least 4 characters.";
+                return false;
+            }
+
+            _data.Settings.AdminPassword = PasswordHasher.Hash(newPassword);
+            _data.SaveSettings();
+            _log.AddLog("Admin", "Admin password updated");
+            return true;
+        }
+
         private void PasswordValidHashed()
         {
             string stored = (_data.Settings.AdminPassword ?? "").Trim().Trim('"');
