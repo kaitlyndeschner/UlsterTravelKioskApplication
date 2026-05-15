@@ -2,9 +2,9 @@
 
 ## Overview
 
-The Ulster Travel Kiosk Application is a desktop application built using C# and WPF on .NET 8. The project was developed as part of a Computing course project and simulates a travel kiosk system that allows users to browse travel information, routes, destinations, airlines, and delay predictions through an interactive graphical interface.
+The Ulster Travel Kiosk Application is a desktop application built using C#, WPF, and .NET 8. The project was developed as part of a Computing course project and simulates a self-service travel kiosk system where users can browse destinations, airports, airlines, routes, and delay prediction information through an interactive graphical interface.
 
-The application follows a layered architecture with separate class library and UI projects, helping improve maintainability and scalability.
+The application follows a layered architecture with separate business logic and UI projects to improve maintainability, scalability, and code organisation.
 
 ---
 
@@ -12,12 +12,12 @@ The application follows a layered architecture with separate class library and U
 
 * Browse travel destinations
 * View airport and airline information
-* Route management functionality
-* Delay prediction data integration
+* Explore airline routes and destinations
+* Delay prediction functionality
 * Admin login and management screens
-* Logging system for tracking application activity
+* Logging system for application activity tracking
 * CSV-based data storage
-* Modern WPF user interface using Material Design components
+* Modern WPF interface
 
 ---
 
@@ -29,11 +29,42 @@ The application follows a layered architecture with separate class library and U
 ### Home Help Screen
 ![Home Screen](Screenshots/home-help-screen.png)
 
-### Admin Screen
-![Admin Panel](Screenshots/admin-screen.png)
+### Airport Information Screen
 
-## Admin Screen (Credentials)
-![Admin Panel](Screenshots/admin-screen-credentials.png)
+![Airport Screen](Screenshots/airport-screen.png)
+
+### Airline Screen
+
+![Airline Screen](Screenshots/airline-screen.png)
+
+### Routes & Destinations Screen
+
+![Routes Screen](Screenshots/routes-screen.png)
+
+### Admin Login Screen
+
+![Admin Login](Screenshots/admin-login.png)
+
+### Admin Dashboard
+
+![Admin Dashboard](Screenshots/admin-dashboard.png)
+
+### Admin Help Screen
+
+![Help Screen](Screenshots/admin-help-screen.png)
+
+### Logging Screen
+
+![Log Screen](Screenshots/log-screen.png)
+
+### Data Management Screen
+
+![Data Screen](Screenshots/data-screen.png)
+
+### Settings Screen
+
+![Settings Screen](Screenshots/settings-screen.png)
+
 
 ---
 
@@ -97,8 +128,6 @@ Handles the application's business logic and data processing:
 
 ### UI Layer
 
-The WPF UI project provides:
-
 * Interactive travel kiosk screens
 * Administrative management panels
 * Login functionality
@@ -116,21 +145,39 @@ The WPF UI project provides:
 
 ### Running the Application
 
-1. Clone the repository:
+#### 1. Clone the repository
 
 ```bash
 git clone https://github.com/kaitlyndeschner/UlsterTravelKioskApplication.git
 ```
 
-2. Open the solution file:
+#### 2. Open the project folder
 
 ```bash
-UlsterTravelKioskApplication.sln
+cd UlsterTravelKioskApplication
 ```
-cd
-3. Restore NuGet packages
 
-4. Build and run the application using Visual Studio
+#### 3. Open the solution file
+
+```bash
+UlsterTravelKioskApplicationFULLPROJECT.sln
+```
+
+#### 4. Restore NuGet packages
+
+Restore packages automatically through Visual Studio or run:
+
+```bash
+dotnet restore
+```
+
+#### 5. Build and run the application
+
+Run the application through Visual Studio or use:
+
+```bash
+dotnet run --project .\UlsterTravelKioskApplication.UI\
+```
 
 ---
 
@@ -154,7 +201,7 @@ This project helped develop skills in:
 Potential future enhancements include:
 
 * Database integration using SQL Server
-* Real-time API integration for live travel data
+* API integration for live travel data
 * Improved authentication and security
 * Enhanced UI/UX animations and responsiveness
 * Advanced analytics and reporting
@@ -166,7 +213,7 @@ Potential future enhancements include:
 
 Kaitlyn Deschner
 
-Computing Student & Software Developer
+Computing Student & Graduate Software Developer
 
 ---
 
