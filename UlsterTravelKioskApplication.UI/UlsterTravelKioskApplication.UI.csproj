@@ -24,6 +24,8 @@
 		</Content>
 	</ItemGroup>
 
-
+	<ItemGroup Condition="'$(DesignTimeBuild)' == 'true'">
+		<Compile Include="obj\$(Configuration)\$(TargetFramework)\**\*.g.cs" Visible="false" />
+	</ItemGroup>
 
 </Project>
